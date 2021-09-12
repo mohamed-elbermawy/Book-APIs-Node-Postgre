@@ -1,10 +1,13 @@
 const DbQueries = require("../db/query");
 const DbConnection = require("../db/connection");
+const LoggerService = require("../services/logger.servce");
+const logger = new LoggerService("book.controller");
 
 exports.getAllBooksList = async (req, res) => {
   try {
     const getAllBooksListQuery = DbQueries.Queries.GET_ALL_BOOKS_LIST_QUERY;
     const result = await DbConnection.connection(getAllBooksListQuery);
+    logger.info("All Books List : ", result.rows);
     return res.status(200).json(result.rows);
   } catch (err) {
     console.log("Error : Book<getAllBooksList()>", err);
